@@ -33,7 +33,20 @@ switch (command) {
 //Functions
 
 function myTweets() {
-    console.log("my tweets");
+
+    var params = {screen_name: "@dpedersen84"};
+    client.get("statuses/user_timeline", params, function(error, tweets, response) {
+        if (error) {
+            console.log("Error, please try again.");
+        } else {
+            for (let i = 0; i < 20; i++) {
+                console.log("Created: " + tweets[i].created_at);
+                console.log(tweets[i].text);
+                console.log("===========================================================")
+            }
+        }
+         
+    })
 };
 
 function spotifySong() {
