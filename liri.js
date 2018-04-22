@@ -1,5 +1,6 @@
 let env = require("dotenv").config();
 let keys = require("./keys.js");
+let fs = require("fs");
 let request = require("request");
 let Spotify = require("node-spotify-api");
 let Twitter = require("twitter");
@@ -62,5 +63,23 @@ function movieThis() {
 };
 
 function doWhatItSays() {
-    console.log("my do what it says");
+
+    fs.readFile("random.txt", "utf8", function (error, data) {
+        if (error) {
+            return console.log("Error, please try again.");
+
+        }
+
+        console.log(data);
+
+        let dataArray = data.split(",");
+
+        console.log(dataArray);
+
+        let dataOne = dataArray[0];
+        console.log(dataOne);
+
+        let dataTwo = dataArray[1];
+        console.log(dataTwo);
+    })
 };
