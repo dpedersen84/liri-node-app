@@ -51,6 +51,14 @@ function myTweets() {
 
 function spotifySong() {
     console.log("my spotify");
+    let songName = process.argv[3];
+
+    spotify.search({type: "track", query: songName}, function(error, data) {
+        if(error) {
+            return console.log("Error, please try again.");
+        }
+        console.log(data.tracks.items[1].album.name);
+    })
 };
 
 function movieThis() {
