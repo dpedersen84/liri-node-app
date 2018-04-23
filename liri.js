@@ -56,7 +56,8 @@ function myTweets() {
 };
 
 function spotifySong(searchTerm) {
-    
+
+    //Needed to add code for default "Ace of Base" Search
     spotify.search({type: "track", query: searchTerm}, function(error, data) {
         if(error) {
             return console.log("Error, please try again.");
@@ -78,6 +79,7 @@ function spotifySong(searchTerm) {
 
 function movieThis() {
     
+    //Needed to add code for default "Mr.Nobody" search
     let queryURL = "http://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy";
 
     console.log(queryURL);
