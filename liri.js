@@ -10,15 +10,17 @@ var client = new Twitter(keys.twitter);
 
 let command = process.argv[2];
 
-// Switch statement for command
+// Splits the process.argv array after index 2 and makes searchTerm everything after
+let searchTerm = process.argv.slice(3).join(" ");
 
+// Switch statement for command
 switch (command) {
     case "my-tweets":
     myTweets();
     break;
 
     case "spotify-this-song":
-    spotifySong();
+    spotifySong(searchTerm);
     break;
 
     case "movie-this":
@@ -27,6 +29,11 @@ switch (command) {
 
     case "do-what-it-says":
     doWhatItSays();
+    break;
+
+    default:
+    console.log("Sorry, LIRI doesn't understand that. Please try again.");
+    //catchAll();
     break;
 }
 
@@ -49,27 +56,30 @@ function myTweets() {
     })
 };
 
-function spotifySong() {
-    console.log("my spotify");
-    let songName = process.argv[3];
-
-    spotify.search({type: "track", query: songName}, function(error, data) {
+function spotifySong(searchTerm) {
+    
+    spotify.search({type: "track", query: searchTerm}, function(error, data) {
         if(error) {
             return console.log("Error, please try again.");
         }
-        console.log(data.tracks.items[1].album.name);
+        // console.log(data.tracks.items);
+        console.log("Artist: " + data.tracks.items[0].album.artists[0].name)
+        console.log("Song Name: " + data.tracks.items[0].name)
+        console.log("Album: " + data.tracks.items[0].album.name)
+        console.log("Preview Link: " + data.tracks.items[0].preview_url)
     })
 };
 
 function movieThis() {
     
-    let movieName = process.argv[3];
-
-    let queryURL = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+    let queryURL = "http://www.omdbapi.com/?t=" + searchTerm + "&y=&plot=short&apikey=trilogy";
 
     console.log(queryURL);
 
     request(queryURL, function(error, response, body) {
+        if(error) {
+            return console.log("Error, please try again.");
+        }
 
         console.log("Title: " + JSON.parse(body).Title);
         console.log("Year Released: " + JSON.parse(body).Year);
@@ -91,16 +101,18 @@ function doWhatItSays() {
 
         }
 
-        console.log(data);
-
         let dataArray = data.split(",");
 
-        console.log(dataArray);
-
         let dataOne = dataArray[0];
-        console.log(dataOne);
 
         let dataTwo = dataArray[1];
-        console.log(dataTwo);
+
+        spotifySong(dataTwo);
     })
+};
+
+function catchAll() {
+    //inquirer.prompt(...).then(function(response){
+        //if(rsponse === "movie-this"){movieThis()}
+    // })
 };
