@@ -33,7 +33,6 @@ switch (command) {
 
     default:
     console.log("Sorry, LIRI doesn't understand that. Please try again.");
-    //catchAll();
     break;
 }
 
@@ -62,11 +61,18 @@ function spotifySong(searchTerm) {
         if(error) {
             return console.log("Error, please try again.");
         }
-        // console.log(data.tracks.items);
-        console.log("Artist: " + data.tracks.items[0].album.artists[0].name)
-        console.log("Song Name: " + data.tracks.items[0].name)
-        console.log("Album: " + data.tracks.items[0].album.name)
-        console.log("Preview Link: " + data.tracks.items[0].preview_url)
+
+        let results = data.tracks.items;
+
+        for (let i = 0; i < results.length; i++) {
+
+            console.log("Artist: " + results[i].album.artists[0].name);
+            console.log("Song Name: " + results[i].name);
+            console.log("Album: " + results[i].album.name);
+            console.log("Preview Link: " + results[i].preview_url);
+            console.log("===================================");
+        }
+        
     })
 };
 
@@ -109,10 +115,4 @@ function doWhatItSays() {
 
         spotifySong(dataTwo);
     })
-};
-
-function catchAll() {
-    //inquirer.prompt(...).then(function(response){
-        //if(rsponse === "movie-this"){movieThis()}
-    // })
 };
